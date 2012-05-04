@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+		<title>Javascript Desktop Environment</title>
+		<script type="text/javascript" src="jquery.js"></script>
+		<script type="text/javascript" src="jquery.disable.select.js"></script>
+		<script type="text/javascript" src="jsde.js"></script>
+		<script type="text/javascript">
+			var t;
+			$(function(){
+				createWindow(140, 30, "Test title", "<strong>Test contents</strong><pre></pre>", 500, 620, false);
+				var secondWindow = createWindow(440, 120, "Test title", "<strong>Test contents</strong>", 300, 150).bringToForeground();
+				debugEl = secondWindow;
+				secondWindow.minHeight = 100;
+				secondWindow.minWidth = 100;
+				secondWindow.maxHeight = 400;
+				secondWindow.maxWidth = 400;
+			})
+		</script>
+		<link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" type="text/css" href="base.css">
+		<link rel="stylesheet" type="text/css" href="style.css">
+	</head><body>
+		<div id="make-window">
+			<span id="id1">140, -8</span><br>
+			<span id="id2">733, 85<br>873, 77</span><br><br>
+			X: <input id="x" value="200" type="text"><br>
+			Y: <input id="y" value="250" type="text"><br>
+			Title: <input id="title" value="200" type="text"><br>
+			Contents (HTML): <br>
+			<textarea id="contents" style="width: 300px; height: 180px;">&lt;strong&gt;ohai!&lt;/strong&gt;&lt;br&gt;
+lol&lt;hr&gt;
+&lt;button&gt;:3&lt;/button&gt;
+			</textarea><br>
+			Width: <input id="w" value="400" type="text"><br>
+			Height: <input id="h" value="300" type="text"><br>
+			<button onclick="createWindow(parseInt($('#x').val()),parseInt($('#y').val()),$('#title').val(),$('#contents').val(),parseInt($('#w').val()),parseInt($('#h').val())).bringToForeground();">Make new window</button>
+		</div>
+		<div class="workspace-bar">
+			<span id="workspace-tab-list">
+				<!-- workspace tabs go here -->
+			</span>
+			<a class="workspace-tab workspace-tab-add" id="workspace_tab_add" href="#">+</a>
+		</div>
+	</body></html>
