@@ -43,6 +43,55 @@
 
 	Holds a reference to the DOM element containing the window contents.
 
+### Constructor
+
+^ new JsdeWindow(options)
+
+	Creates a new window.
+	
+	options::
+		A plain object that contains the options for this window. Options can be any of
+		the following.
+		
+		title::
+			The title of the new window. You can use HTML here.
+			
+		contents::
+			The contents of the new window. You can use HTML here.
+		
+		visible::
+			A boolean indicating whether the window should be visible. Defaults to `true`.
+			
+		x::
+			An integer specifying the X coordinate that the window should be spawned at.
+			
+		y::
+			An integer specifying the Y coordinate that the window should be spawned at.
+			
+		width::
+			An integer specifying the initial width of the window in pixels.
+			
+		height::
+			An integer specifying the initial height of the window in pixels.
+			
+		resizable::
+			A boolean indicating whether the user is allowed to resize the window.
+			Defaults to `true`.
+			
+		min_width::
+			The minimum width of the window in pixels (used to restrict resizing). Defaults to `120`.
+			
+		min_height::
+			The minimum height of the window in pixels (used to restrict resizing). Defaults to `120`.
+			
+		max_width::
+			The maximum width of the window in pixels (used to restrict resizing). Defaults to unlimited.
+			
+		max_height::
+			The maximum height of the window in pixels (used to restrict resizing). Defaults to unlimited.
+			
+		
+
 ### Member functions	
 
 ^ JsdeWindow.SetPosition(**x**, **y**)

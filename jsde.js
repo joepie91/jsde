@@ -58,6 +58,9 @@ function JsdeWindow(options)
 	if(typeof options.y === "undefined") { this.y = 0; }
 	if(typeof options.width === "undefined") { this.width = 250; }
 	if(typeof options.height === "undefined") { this.height = 200; }
+	if(typeof options.min_width === "undefined") { this.min_width = 120; }
+	if(typeof options.min_height === "undefined") { this.min_height = 120; }
+	if(typeof options.resizable === "undefined") { this.resizable = true; }
 	
 	this.SetPosition(this.x, this.y);
 	this.SetSize(this.width, this.height);
@@ -209,8 +212,29 @@ function _HandleMouseMove(event)
 	}
 	else if(currently_resizing === true)
 	{
-		var new_x = event.pageX - (resize_start.x + currently_resized_window.x);
-		var new_y = event.pageY - (resize_start.y + currently_resized_window.y);
-		currently_resized_window.SetSize(new_x, new_y);
+		var new_w = event.pageX - (resize_start.x + currently_resized_window.x);
+		var new_h = event.pageY - (resize_start.y + currently_resized_window.y);
+		
+		if(typeof currently_resized_window.min_width !== "undefined" && new_w < currently_resized_window.min_width)
+		{
+			new_w = currently_resized_window.min_width;
+		}
+		
+		if(typeof currently_resized_window.min_height !== "undefined" && new_h < currently_resized_window.min_height)
+		{
+			new_h = currently_resized_window.min_height;
+		}
+		
+		if(typeof currently_resized_window.max_width !== "undefined" && new_w > currently_resized_window.max_width)
+		{
+			new_w = currently_resized_window.max_width;
+		}
+		
+		if(typeof currently_resized_window.max_height !== "undefined" && new_h > currently_resized_window.max_height)
+		{
+			new_h = currently_resized_window.max_height;
+		}
+		
+		currently_resized_window.SetSize(new_w, new_h);
 	}
 }
