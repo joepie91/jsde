@@ -64,14 +64,27 @@ function JsdeWindow(options)
 	$(this._inner).data("jsde-window", this)
 	$(this._title).data("jsde-window", this)
 	
+	$(this._outer).find(".window-close a").click(this._HandleClose);
+	
 	this.BringToForeground();
 }
 
 JsdeWindow.prototype.BringToForeground = function()
 {
+	this.z = next_z_index;
 	$(this._outer).css({"z-index": next_z_index})
 	next_z_index++;
 	return this;
+}
+
+JsdeWindow.prototype.Close = function(forced)
+{
+	if(typeof forced === "undefined")
+	{
+		forced = false;
+	}
+	
+	$(this._outer).remove();
 }
 
 JsdeWindow.prototype.GetContents = function()
@@ -141,6 +154,12 @@ JsdeWindow.prototype._HandleMouseDown = function(event)
 	currently_dragged_window.BringToForeground();
 	$("body").disableSelection();
 	event.stopPropagation();
+}
+
+JsdeWindow.prototype._HandleClose = function(event)
+{
+	affected_window = $(this).closest(".window-title").data("jsde-window");
+	affected_window.Close();
 }
 
 function _HandleMouseUp(event)
