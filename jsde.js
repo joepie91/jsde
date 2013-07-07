@@ -22,6 +22,9 @@ var next_z_index = 1;
 var currently_dragged_window = null;
 var currently_dragging = false;
 var drag_start = {x: 0, y: 0};
+var currently_resized_window = null;
+var currently_resizing = false;
+var resize_start = {x: 0, y: 0};
 
 $(function(){
 	$("body").mousemove(_HandleMouseMove);
@@ -69,6 +72,8 @@ function JsdeWindow(options)
 	$(this._title).data("jsde-window", this)
 	
 	$(this._outer).find(".window-close a").click(this._HandleClose);
+	
+	$(this._outer).find(".window-resizer").mousedown(this._HandleStartResize.bind(this));
 	
 	this.BringToForeground();
 }
@@ -167,6 +172,18 @@ JsdeWindow.prototype._HandleClose = function(event)
 	affected_window.Close();
 }
 
+JsdeWindow.prototype._HandleStartResize = function(event)
+{
+	currently_resizing = true;
+	currently_resized_window = this;
+	resize_start = {x: event.pageX - (currently_resized_window.x + currently_resized_window.width), 
+	                y: event.pageY - (currently_resized_window.y + currently_resized_window.height)};
+	$(currently_resized_window._outer).addClass("window-dragged");
+	currently_resized_window.BringToForeground();
+	$("body").disableSelection();
+	event.stopPropagation();
+}
+
 function _HandleMouseUp(event)
 {
 	if(currently_dragging === true)
@@ -175,6 +192,13 @@ function _HandleMouseUp(event)
 		$("body").enableSelection();
 		$(currently_dragged_window._outer).removeClass("window-dragged");
 	}
+	
+	if(currently_resizing === true)
+	{
+		currently_resizing = false;
+		$("body").enableSelection();
+		$(currently_resized_window._outer).removeClass("window-dragged");
+	}
 }
 
 function _HandleMouseMove(event)
@@ -182,5 +206,11 @@ function _HandleMouseMove(event)
 	if(currently_dragging === true)
 	{
 		currently_dragged_window.SetPosition(event.pageX - drag_start.x, event.pageY - drag_start.y);
+	}
+	else if(currently_resizing === true)
+	{
+		var new_x = event.pageX - (resize_start.x + currently_resized_window.x);
+		var new_y = event.pageY - (resize_start.y + currently_resized_window.y);
+		currently_resized_window.SetSize(new_x, new_y);
 	}
 }
