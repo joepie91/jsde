@@ -2,6 +2,13 @@
 
 {TOC}
 
+## jQuery extensions
+
+^ $.getWindow()
+
+	Returns the JsdeWindow that the applicable element exists in. Useful to
+	do things like dynamically updating windows from an AJAX response.
+
 ## JsdeWindow
 
 ### Member variables

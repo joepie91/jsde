@@ -12,6 +12,10 @@
 		 .css('user-select', 'text')
 		 .off('selectstart');
 	};
+	
+	$.fn.getWindow = function() {
+		return this.closest(".window-inner").data("jsde-window");
+	};
 })(jQuery);
 
 var next_z_index = 1;
@@ -29,7 +33,7 @@ function JsdeWindow(options)
 	$.extend(this, options);
 	
 	this._outer = $("#jsde_templates .template_window").clone()[0];
-	this._inner = $(this._outer).children(".window-inner")[0];
+	this._inner = $(this._outer).find(".window-inner")[0];
 	this._title = $(this._outer).children(".window-title")[0];
 	
 	if(typeof options.visible !== "undefined" && options.visible == false)
@@ -126,6 +130,7 @@ JsdeWindow.prototype.SetSize = function(width, height)
 
 JsdeWindow.prototype.SetContents = function(html)
 {
+	console.log("set contents", html, this);
 	return $(this._inner).html(html);
 }
 
