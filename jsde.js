@@ -1,34 +1,34 @@
-/**
- * .disableTextSelect - Disable Text Select Plugin
- *
- * Version: 1.1
- * Updated: 2007-11-28
- *
- * Used to stop users from selecting text
- *
- * Copyright (c) 2007 James Dempster (letssurf@gmail.com, http://www.jdempster.com/category/jquery/disabletextselect/)
- *
- * Dual licensed under the MIT (MIT-LICENSE.txt)
- * and GPL (GPL-LICENSE.txt) licenses.
- **/
-
-/**
- * Requirements:
- * - jQuery (John Resig, http://www.jquery.com/)
- **/
-(function($){if($.browser.mozilla){$.fn.disableTextSelect=function(){return this.each(function(){$(this).css({"MozUserSelect":"none"})})};$.fn.enableTextSelect=function(){return this.each(function(){$(this).css({"MozUserSelect":""})})}}else{if($.browser.msie){$.fn.disableTextSelect=function(){return this.each(function(){$(this).bind("selectstart.disableTextSelect",function(){return false})})};$.fn.enableTextSelect=function(){return this.each(function(){$(this).unbind("selectstart.disableTextSelect")})}}else{$.fn.disableTextSelect=function(){return this.each(function(){$(this).bind("mousedown.disableTextSelect",function(){return false})})};$.fn.enableTextSelect=function(){return this.each(function(){$(this).unbind("mousedown.disableTextSelect")})}}}})(jQuery)
-
-/* JSDE code starts here */
+(function($){
+	$.fn.disableSelection = function() {
+		return this
+		 .attr('unselectable', 'on')
+		 .css('user-select', 'none')
+		 .on('selectstart', false);
+	};
+	
+	$.fn.enableSelection = function() {
+		return this
+		 .attr('unselectable', 'off')
+		 .css('user-select', 'text')
+		 .off('selectstart');
+	};
+})(jQuery);
 
 var next_z_index = 1;
 var currently_dragged_window = null;
-var currently_dragging = true;
+var currently_dragging = false;
+var drag_start = {x: 0, y: 0};
+
+$(function(){
+	$("body").mousemove(_HandleMouseMove);
+	$("body").mouseup(_HandleMouseUp);
+})
 
 function JsdeWindow(options)
 {
 	$.extend(this, options);
 	
-	this._outer = $("#templates .template_window").clone()[0];
+	this._outer = $("#jsde_templates .template_window").clone()[0];
 	this._inner = $(this._outer).children(".window-inner")[0];
 	this._title = $(this._outer).children(".window-title")[0];
 	
@@ -56,13 +56,20 @@ function JsdeWindow(options)
 	this.SetSize(this.width, this.height);
 	
 	$(this._outer).click(this._HandleClick);
-	$(this._outer).mousedown(this._HandleMouseDown);
 	$(this._outer).appendTo("body");
+	
+	$(this._title).mousedown(this._HandleMouseDown);
+	
+	$(this._outer).data("jsde-window", this)
+	$(this._inner).data("jsde-window", this)
+	$(this._title).data("jsde-window", this)
+	
+	this.BringToForeground();
 }
 
 JsdeWindow.prototype.BringToForeground = function()
 {
-	this.element.css({"z-index": next_z_index})
+	$(this._outer).css({"z-index": next_z_index})
 	next_z_index++;
 	return this;
 }
@@ -91,6 +98,11 @@ JsdeWindow.prototype.SetPosition = function(x, y)
 	return $(this._outer).css({left: this.x, top: this.y});
 }
 
+JsdeWindow.prototype.GetPosition = function()
+{
+	return {x: this.x, y: this.y};
+}
+
 JsdeWindow.prototype.SetSize = function(width, height)
 {
 	this.width = width;
@@ -117,15 +129,34 @@ JsdeWindow.prototype.Show = function()
 
 JsdeWindow.prototype._HandleClick = function(event)
 {
-	
+	$(this).data("jsde-window").BringToForeground();
 }
 
 JsdeWindow.prototype._HandleMouseDown = function(event)
 {
-	
+	currently_dragging = true;
+	currently_dragged_window = $(this).data("jsde-window");
+	drag_start = {x: event.pageX - currently_dragged_window.x, y: event.pageY - currently_dragged_window.y};
+	$(currently_dragged_window._outer).addClass("window-dragged");
+	currently_dragged_window.BringToForeground();
+	$("body").disableSelection();
+	event.stopPropagation();
 }
 
-JsdeWindow.prototype._HandleMouseUp = function(event)
+function _HandleMouseUp(event)
 {
-	
+	if(currently_dragging === true)
+	{
+		currently_dragging = false;
+		$("body").enableSelection();
+		$(currently_dragged_window._outer).removeClass("window-dragged");
+	}
+}
+
+function _HandleMouseMove(event)
+{
+	if(currently_dragging === true)
+	{
+		currently_dragged_window.SetPosition(event.pageX - drag_start.x, event.pageY - drag_start.y);
+	}
 }

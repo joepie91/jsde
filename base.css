@@ -3,6 +3,19 @@ html, body
 	overflow: hidden;
 }
 
+body
+{
+	position: fixed;
+	margin: 0px;
+	width: 100%;
+	height: 100%;
+}
+
+#jsde_templates
+{
+	display: none;
+}
+
 /* MDIWindow Styling | Generic */
 
 div.window-wrapper
@@ -40,8 +53,8 @@ div.window-close
 div.window-close a
 {
 	position: absolute;
-	right: 2px;
-	top: 1px;
+	right: 3px;
+	top: 2px;
 	display: block;
 	padding: 1px 4px;
 	text-decoration: none;

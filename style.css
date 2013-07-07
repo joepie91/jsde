@@ -29,11 +29,11 @@ div.window-title
 	-moz-border-radius-topright: 10px;
 	border-top-left-radius: 10px;
 	border-top-right-radius: 10px;
-	height: 18px;
+	height: 16px;
 	color: white;
 	font-size: 14px;
 	font-weight: bold;
-	padding: 2px;
+	padding: 4px;
 	padding-left: 7px;
 	border-top: 1px solid #6262FF;
 	border-right: 1px solid #6262FF;
@@ -43,7 +43,7 @@ div.window-title
 div.window-outer
 {
 	font-size: 13px;
-	top: 23px;
+	top: 25px;
 	border-bottom: 1px solid gray;
 	border-right: 1px solid gray;
 	border-left: 1px solid gray;
@@ -107,11 +107,24 @@ div.window-styled div.window-outer
 div.window-dragged div.window-title
 {
 	background-color: #0070D5;
+	background-image: none;
 }
 
 div.workspace-bar
 {
 	height: 32px;
+}
+
+div.window-dragged div.window-outer
+{
+	background: none;
+}
+
+div.window-dragged div.window-title, div.window-dragged div.window-outer
+{
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
 }
 
 a.workspace-tab
