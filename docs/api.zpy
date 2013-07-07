@@ -1,0 +1,109 @@
+# JSDE API Reference
+
+{TOC}
+
+## JsdeWindow
+
+### Member variables
+
+^ JsdeWindow.id
+
+	Holds the unique ID of the window.
+
+^ JsdeWindow.x
+
+	Holds the current X position of the window.
+
+^ JsdeWindow.y
+
+	Holds the current Y position of the window.
+	
+^ JsdeWindow.z
+
+	Holds the current Z-index of the window.
+	
+^ JsdeWindow.width
+
+	Holds the current width of the window.
+	
+^ JsdeWindow.height
+
+	Holds the current height of the window.
+	
+^ JsdeWindow._inner
+
+	! Do __not__ use this to set the window contents, use JsdeWindow.SetContents() instead!
+
+	Holds a reference to the DOM element containing the window contents.
+
+### Member functions	
+
+^ JsdeWindow.SetPosition(**x**, **y**)
+
+	Sets the current position of a window.
+	
+	x::
+		The X coordinate.
+	
+	y::
+		The Y coordinate.
+		
+	@ Setting the window position
+	
+		$ win.SetPosition(100, 110);
+
+^ JsdeWindow.SetSize(**width**, **height**)
+
+	Sets the current size of a window.
+	
+	width::
+		The new width.
+	
+	height::
+		The new height.
+		
+	@ Setting the window size
+	
+		$ win.SetSize(400, 350);
+		
+^ JsdeWindow.GetTitle()
+
+	Returns the current title of the window.
+	
+	@ Retrieving the window title
+	
+		$ console.log(win.GetTitle());
+		
+		> "Example window title"
+		
+^ JsdeWindow.SetTitle(**title**)
+
+	Sets the current title of the window.
+	
+	title::
+		The title to set.
+	
+	@ Setting the window title
+	
+		$ win.SetTitle("Fancy new window title");
+		
+^ JsdeWindow.GetContents()
+
+	Returns the current contents of the window.
+	
+	@ Retrieving the window contents
+	
+		$ console.log(win.GetContents());
+		
+		> "These are some example contents that could hypothetically be in a <strong>JSDE window</strong>."
+
+^ JsdeWindow.SetContents(**contents**)
+
+	Sets the contents of the window.
+	
+	contents::
+		The new window contents.
+	
+	@ Setting the window contents
+	
+		$ win.SetContents("These are <em>new</em> hypothetical contents for a window.");

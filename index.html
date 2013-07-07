@@ -1,26 +1,34 @@
-<!DOCTYPE HTML>
-<html><head>
-<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+<!doctype html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
 		<title>Javascript Desktop Environment</title>
 		<script type="text/javascript" src="jquery.js"></script>
-		<script type="text/javascript" src="jquery.disable.select.js"></script>
 		<script type="text/javascript" src="jsde.js"></script>
 		<script type="text/javascript">
-			var t;
 			$(function(){
-				createWindow(140, 30, "Test title", "<strong>Test contents</strong><pre></pre>", 500, 620, false);
+				/*createWindow(140, 30, "Test title", "<strong>Test contents</strong><pre></pre>", 500, 620, false);
 				var secondWindow = createWindow(440, 120, "Test title", "<strong>Test contents</strong>", 300, 150).bringToForeground();
 				debugEl = secondWindow;
 				secondWindow.minHeight = 100;
 				secondWindow.minWidth = 100;
 				secondWindow.maxHeight = 400;
-				secondWindow.maxWidth = 400;
+				secondWindow.maxWidth = 400;*/
+				
+				new JsdeWindow({
+					x: 20,
+					y: 20,
+					width: 400,
+					height: 300,
+					title: "Hi"
+				});
 			})
 		</script>
 		<link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" type="text/css" href="base.css">
 		<link rel="stylesheet" type="text/css" href="style.css">
-	</head><body>
+	</head>
+	<body>
 		<div id="make-window">
 			<span id="id1">140, -8</span><br>
 			<span id="id2">733, 85<br>873, 77</span><br><br>
@@ -42,4 +50,23 @@ lol&lt;hr&gt;
 			</span>
 			<a class="workspace-tab workspace-tab-add" id="workspace_tab_add" href="#">+</a>
 		</div>
-	</body></html>
+		<div id="templates">
+			<div class="template_window window-wrapper window-styled">
+				<div class="window-title">
+					Test title
+					<div class="window-close">
+						<a href="#">X</a>
+					</div>
+				</div>
+				<div class="window-outer">
+					<div class="window-inner">
+						<strong>Test contents</strong>
+					</div>
+					<div class="window-resizer">
+					</div>
+				</div>
+				<input type="hidden" name="MDIWindowIdentifier" value="1" class="MDIWindowIdentifier">
+			</div>
+		</div>
+	</body>
+</html>
