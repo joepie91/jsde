@@ -52,6 +52,12 @@
 	
 		$ win.SetPosition(100, 110);
 
+^ JsdeWindow.GetPosition()
+
+	Retrieves the current position of a window.
+	
+	Returns an object with an `x` and a `y` key.
+
 ^ JsdeWindow.SetSize(**width**, **height**)
 
 	Sets the current size of a window.
